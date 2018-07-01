@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'osyo-manga/vim-over'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'ajh17/VimCompletesMe'
@@ -16,7 +17,6 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
-Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 " Initialize plugin system
 call plug#end()
@@ -27,6 +27,21 @@ set relativenumber
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+" Config
+"
+if $TMUX == ''
+set clipboard+=unnamed
+endif
+
+if $TMUX != ''
+set ttymouse=xterm2
+endif
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 set wildmenu
 set laststatus=2
@@ -36,19 +51,16 @@ set noswapfile
 set autoread
 set autowrite
 set visualbell
-let base16colorspace=256 " Access colors present in 256 colorspace
-colorscheme base16-default-dark
 set mouse=a
 set timeoutlen=500
-
 "
 " Mappings
 " 
 
-nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
-xnoremap <Leader>fr :call VisualFindAndReplaceWithSelection()<CR>
+nnoremap <Leader>r :call VisualFindAndReplace()<CR>
+xnoremap <Leader>r :call VisualFindAndReplaceWithSelection()<CR>
 
-let mapleader = " "
+let mapleader = "\<Space>"
 " window switching
 nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
@@ -77,19 +89,21 @@ map g# <Plug>(incsearch-nohl-g#)
 
 " enable neocomplete at start
 let g:neocomplete#enable_at_startup = 1
-" make backspace work like most other apps
+" jump through quickfix list
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
 
 "
 " Formatting
 "
 set nostartofline
-set backspace=indent,eol,start
+set backspace=indent,eol,start " make backspace work like most other apps
 set nowrap
 set ttimeoutlen=50
 set directory=$HOME/.vim/swapfiles//
-set expandtab
 set shiftwidth=2
 set softtabstop=2
+set tabstop=2
 set noshowmode
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
@@ -114,7 +128,36 @@ function! VisualFindAndReplace()
     :OverCommandLine%s/
     :w
 endfunction
+
 function! VisualFindAndReplaceWithSelection() range
     :'<,'>OverCommandLine s/
     :w
 endfunction
+
+" 
+" Go
+"
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+let g:go_fmt_command = "goimports" " import missing packages automatically
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <Leader>a :GoAlternate <CR> 
+
+"
+" JS
+"
+
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
+autocmd Filetype javascript nmap <leader>x :silent !eslint --fix %<CR>
