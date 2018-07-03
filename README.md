@@ -1,6 +1,7 @@
 # My Dotfiles
 ![image](https://user-images.githubusercontent.com/14861458/42138180-0742d082-7d47-11e8-8f46-32063c9148f9.png)
-This repository is mainly for own use. Copy with care.
+This repository is mainly for own use. Copy with care. The zsh theme is "robbyrussell" with
+the "base16-tomorrow-night" color theme.
 
 ## Intallation:
 
