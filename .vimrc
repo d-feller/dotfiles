@@ -1,4 +1,6 @@
 call plug#begin('~/.vim/plugged')
+Plug 'mxw/vim-jsx',
+Plug 'mattn/emmet-vim'
 Plug 'osyo-manga/vim-over'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'haya14busa/incsearch.vim'
@@ -18,15 +20,17 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'ryanoasis/vim-devicons'
 " Initialize plugin system
 call plug#end()
 syntax on
 set number
 set relativenumber
+set encoding=UTF-8
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<C-tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "
 " Config
 "
@@ -112,10 +116,10 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
       \ },
       \ }
 
