@@ -108,6 +108,7 @@ set directory=$HOME/.vim/swapfiles//
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
+set noexpandtab
 set noshowmode
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
@@ -165,10 +166,3 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <Leader>a :GoAlternate <CR> 
-
-"
-" JS
-"
-
-autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript nmap <leader>x :silent !eslint --fix %<CR>
