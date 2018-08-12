@@ -1,12 +1,14 @@
 call plug#begin('~/.vim/plugged')
+Plug 'Valloric/YouCompleteMe'
+Plug 'ternjs/tern_for_vim'
+" Track the engine.
+Plug 'SirVer/ultisnips'
 Plug 'mxw/vim-jsx',
 Plug 'mattn/emmet-vim'
 Plug 'osyo-manga/vim-over'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'ajh17/VimCompletesMe'
-Plug 'maralla/completor.vim'
 Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
@@ -18,18 +20,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'SirVer/ultisnips'
+
 " Initialize plugin system
 call plug#end()
 syntax on
 set number
 set relativenumber
 set encoding=UTF-8
-" Plug 'SirVer/ultisnips' Config
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-y>"
+
+
 "
 " Config
 "
@@ -90,8 +89,6 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-" enable neocomplete at start
-let g:neocomplete#enable_at_startup = 1
 " jump through quickfix list
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
@@ -130,8 +127,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
-" Set this variable to 1 to fix files when you save them.
-let g:ale_fix_on_save = 1
 
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
 
