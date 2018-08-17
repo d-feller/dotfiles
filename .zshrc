@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 ulimit -n 65536 65536
+
+export TERM=xterm-256color
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/dmitrijfeller/.oh-my-zsh
 export PATH="/Users/dmitrijfeller/go/bin/:$PATH"
