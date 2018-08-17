@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe'
 Plug 'ternjs/tern_for_vim'
-" Track the engine.
 Plug 'SirVer/ultisnips'
 Plug 'mxw/vim-jsx',
 Plug 'mattn/emmet-vim'
@@ -32,6 +31,11 @@ set encoding=UTF-8
 "
 " Config
 "
+
+" higlight search but not when sourcing .vimrc
+set hls
+let @/ = ""
+
 if $TMUX == ''
 set clipboard+=unnamed
 endif
@@ -55,6 +59,7 @@ set autowrite
 set visualbell
 set mouse=a
 set timeoutlen=500
+set cursorline
 "
 " Mappings
 " 
@@ -127,6 +132,12 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
+"
+" UltiSnips settings
+"
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<TAB>"
+let g:UltiSnipsJumpBackwardTrigger="<S-TAB>"
 
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
 
@@ -139,7 +150,12 @@ function! VisualFindAndReplaceWithSelection() range
     :'<,'>OverCommandLine s/
     :w
 endfunction
-
+"
+" YouCompleteMe
+"
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+"
 " 
 " Go
 "
