@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe'
 Plug 'ternjs/tern_for_vim'
 Plug 'SirVer/ultisnips'
@@ -60,6 +61,7 @@ set visualbell
 set mouse=a
 set timeoutlen=500
 set cursorline
+set background=dark
 "
 " Mappings
 " 
@@ -77,6 +79,8 @@ nnoremap <C-l> <C-w>l
 nnoremap <Leader>f :BLines<CR>  
 " fuzzy find files in cwd
 nnoremap <Leader>t :Files<CR>  
+" fuzzy find in current buffers
+nnoremap <Leader>b :Buffers<CR>  
 " NERDTree
 nnoremap <Leader>n :NERDTreeToggle<CR>
 
