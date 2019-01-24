@@ -8,10 +8,6 @@ export TERM=xterm-256color
 export ZSH=/Users/dmitrijfeller/.oh-my-zsh
 export PATH="/Users/dmitrijfeller/go/bin/:$PATH"
 
-# Base16 shell export
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
