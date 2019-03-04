@@ -1,18 +1,23 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'neomake/neomake'
+Plug 'itchyny/lightline.vim'
+" Linting
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'davidhalter/jedi-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
-" Syntax Highlighting
-Plug 'fenetikm/falcon'
+" syntax highlighting
+Plug 'd-feller/blayu.vim'
+" C# support
+Plug 'ap/vim-css-color'
 Plug 'sheerun/vim-polyglot'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'haya14busa/incsearch.vim'
 Plug 'osyo-manga/vim-over'
+Plug 'fatih/vim-go'
 call plug#end()
 
 
@@ -24,21 +29,13 @@ set number
 set relativenumber
 set encoding=UTF-8
 
-let g:falcon_airline = 1
-let g:airline_theme = 'falcon'
-let g:falcon_background = 0
-let g:falcon_inactive = 1
-colorscheme falcon
+colorscheme blayu
+let g:lightline = {'colorscheme' : 'blayu',}
 
 "
 " Config
 "
-" Enable true color 启用终端24位色
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+
 if $TMUX == ''
 set clipboard+=unnamed
 endif
@@ -58,6 +55,9 @@ set visualbell
 set mouse=a
 set timeoutlen=500
 set cursorline
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
 
 :set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
@@ -101,6 +101,8 @@ map g# <Plug>(incsearch-nohl-g#)
 " jump through quickfix list
 map <C-n> :lnext<CR>
 map <C-m> :lprev<CR>
+" Enable folding with the +
+nnoremap + za
 
 "
 " Formatting
@@ -123,12 +125,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 
-" Neomake Settings
-" Full config: when writing or reading a buffer, and on changes in insert and
-" normal mode (after 1s; no delay when writing).
-call neomake#configure#automake('nw', 750)
-" let g:neomake_open_list = 2
-
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
 
 function! VisualFindAndReplace()
@@ -140,3 +136,23 @@ function! VisualFindAndReplaceWithSelection() range
 		:'<,'>OverCommandLine s/
 		:w
 endfunction
+"
+" Go
+"
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+	let l:file = expand('%')
+	if l:file =~# '^\f\+_test\.go$'
+		call go#test#Test(0, 1)
+	elseif l:file =~# '^\f\+\.go$'
+		call go#cmd#Build(0)
+	endif
+endfunction
+
+let g:go_fmt_command = "goimports" " import missing packages automatically
+
+
+"
+" C#
+"
