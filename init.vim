@@ -8,12 +8,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " syntax highlighting
 Plug 'd-feller/blayu.vim'
 " C# support
 Plug 'ap/vim-css-color'
 Plug 'sheerun/vim-polyglot'
-Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'haya14busa/incsearch.vim'
 Plug 'osyo-manga/vim-over'
@@ -23,8 +24,8 @@ call plug#end()
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-set termguicolors
 
+" set termguicolors
 set number
 set relativenumber
 set encoding=UTF-8
@@ -120,10 +121,11 @@ let g:netrw_banner = 0
 "
 " UltiSnips settings
 "
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsSnippetDirectories=['~/.local/share/nvim/snippets']
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsExpandTrigger="<tab>"               
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
 
