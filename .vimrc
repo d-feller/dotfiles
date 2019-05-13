@@ -5,6 +5,12 @@ set nocompatible
 filetype off
 
 " TODO: Load plugins here (pathogen, vim-plug or vundle)
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'ajh17/VimCompletesMe'
+call plug#end()
 
 " Turn on syntax highlighting
 syntax on
@@ -15,20 +21,30 @@ filetype plugin indent on
 " TODO: Pick a leader key
 let mapleader = "\<SPACE>"
 
-" Security
-set modelines=0
-
-" Show line numbers
+" Mouse
+set mouse=a
 set number
 
-" Show file stats
-set ruler
+" Statusline
+set laststatus=2
 
-" Blink cursor on error instead of beeping (grr)
-set visualbell
+set statusline=
+set statusline+=\ %{toupper(mode())}\ 
+set statusline+=%#LineNr#
+set statusline+=\ %F
+set statusline+=\ %{FugitiveHead()}
+set statusline+=\ %m
+set statusline+=%=
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ [%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
 
 " Encoding
-set encoding=utf-8
+set encoding=utf-8  " The encoding displayed.
+set fileencoding=utf-8  " The encoding written to file.
 
 " Whitespace
 set wrap
@@ -40,62 +56,15 @@ set softtabstop=2
 set expandtab
 set noshiftround
 
-" Cursor motion
-set scrolloff=3
-set backspace=indent,eol,start
-
-" Move up/down editor lines
-nnoremap j gj
-nnoremap k gk
-
-" Allow hidden buffers
-set hidden
-
-" Rendering
-set ttyfast
-
-" Status bar
-set laststatus=2
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    +-- current column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
-
-" Last line
-set showmode
-set showcmd
-
 " Searching
-nnoremap / /\v
-vnoremap / /\v
+set path+=**
+set wildmenu
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set showmatch
-map <leader><space> :let @/=''<cr> " clear search
+command! MakeTags !ctags -R .
 
-" Textmate holdouts
-
-" Formatting
-map <leader>q gqip
-
-" Visualize tabs and newlines
-set listchars=tab:▸\ ,eol:¬
-" Uncomment this to enable by default:
-" set list " To enable by default
-" Or use your leader key + l to toggle on/off
-map <leader>l :set list!<CR> " Toggle tabs and EOL
-
-" Color scheme (terminal)
-set t_Co=256
+" Colors
 set background=dark
