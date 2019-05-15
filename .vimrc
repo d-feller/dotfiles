@@ -66,11 +66,28 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch
-command! MakeTags !ctags -R .
 
 " Files
-nnoremap <Leader>n :Lexplore<CR>
+let g:NetrwIsOpen=0
+
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i 
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Lexplore
+    endif
+endfunction
+
+nnoremap <Leader>n :call ToggleNetrw()<CR>
 
 " Colors
 set background=dark
-let g:gutentags_cache_dir='˜/.vim/tags/'
+let g:gutentags_cache_dir='~/.vim/tags/'
