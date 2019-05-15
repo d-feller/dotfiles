@@ -10,6 +10,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'ajh17/VimCompletesMe'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 " Turn on syntax highlighting
@@ -32,6 +33,7 @@ set statusline=
 set statusline+=\ %{toupper(mode())}\ 
 set statusline+=%#LineNr#
 set statusline+=\ %F
+set statusline+=%{gutentags#statusline()}
 set statusline+=\ %{FugitiveHead()}
 set statusline+=\ %m
 set statusline+=%=
@@ -66,5 +68,9 @@ set smartcase
 set showmatch
 command! MakeTags !ctags -R .
 
+" Files
+nnoremap <Leader>n :Lexplore<CR>
+
 " Colors
 set background=dark
+let g:gutentags_cache_dir='˜/.vim/tags/'
